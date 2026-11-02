@@ -1,0 +1,7 @@
+build/
+.vs/
+*.user
+third_party/pdfium.tgz
+tools/
+dist/
+installer-smoke/

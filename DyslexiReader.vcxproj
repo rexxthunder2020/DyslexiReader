@@ -1,0 +1,15 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
+ <PropertyGroup Label="Globals"><ProjectGuid>{2A437B33-FA67-4F36-B957-AC700C851234}</ProjectGuid><WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion></PropertyGroup>
+ <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+ <PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><PlatformToolset>v143</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+ <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+ <PropertyGroup><OutDir>$(ProjectDir)build\</OutDir><IntDir>$(ProjectDir)build\obj\</IntDir><TargetName>DyslexiReader</TargetName></PropertyGroup>
+ <ItemDefinitionGroup><ClCompile><LanguageStandard>stdcpp17</LanguageStandard><AdditionalIncludeDirectories>$(ProjectDir)third_party\pdfium\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories><PreprocessorDefinitions>UNICODE;_UNICODE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><RuntimeLibrary>MultiThreaded</RuntimeLibrary></ClCompile><Link><SubSystem>Windows</SubSystem><AdditionalLibraryDirectories>$(ProjectDir)third_party\pdfium\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>pdfium.dll.lib;sapi.lib;ole32.lib;comdlg32.lib;shell32.lib;advapi32.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link><PostBuildEvent><Command>copy /Y "$(ProjectDir)third_party\pdfium\bin\pdfium.dll" "$(OutDir)pdfium.dll"
+xcopy /E /I /Y "$(ProjectDir)third_party\pdfium\licenses" "$(OutDir)licenses"
+copy /Y "$(ProjectDir)third_party\pdfium\LICENSE" "$(OutDir)PDFium-LICENSE.txt"</Command></PostBuildEvent></ItemDefinitionGroup>
+ <PropertyGroup Condition="'$(SelfTest)'=='true'"><TargetName>DyslexiReader-tests</TargetName><IntDir>$(ProjectDir)build\test-obj\</IntDir></PropertyGroup>
+ <ItemGroup Condition="'$(SelfTest)'!='true'"><ClCompile Include="src\main.cpp" /></ItemGroup>
+ <ItemGroup Condition="'$(SelfTest)'=='true'"><ClCompile Include="tests\integration.cpp" /></ItemGroup>
+ <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
